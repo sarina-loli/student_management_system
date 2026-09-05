@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h2>
+        Teachers
+    </h2>
+
+    <a href="{% url 'teacher_add' %}"
+       class="btn">
+
+        Add Teacher
+
+    </a>
+
+</div>
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>Name</th>
+
+            <th>Email</th>
+
+            <th>Qualification</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for teacher in object_list %}
+
+        <tr>
+
+            <td>
+
+                {{ teacher.first_name }}
+                {{ teacher.last_name }}
+
+            </td>
+
+            <td>
+                {{ teacher.email }}
+            </td>
+
+            <td>
+                {{ teacher.qualification }}
+            </td>
+
+            <td>
+
+                <a href="{% url 'teacher_edit' teacher.id %}">
+                    Edit
+                </a>
+
+                <a href="{% url 'teacher_delete' teacher.id %}">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

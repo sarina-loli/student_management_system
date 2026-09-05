@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>
+Student Result Report
+</h2>
+
+<table>
+
+<tr>
+<th>Student</th>
+<th>Subject</th>
+<th>Marks</th>
+<th>Grade</th>
+</tr>
+
+{% for result in results %}
+
+<tr>
+
+<td>{{ result.student }}</td>
+
+<td>{{ result.subject }}</td>
+
+<td>{{ result.marks }}</td>
+
+<td>{{ result.grade }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

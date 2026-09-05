@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h2>
+        Subjects
+    </h2>
+
+    <a href="{% url 'subject_add' %}"
+       class="btn">
+
+        Add Subject
+
+    </a>
+
+</div>
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>Name</th>
+            <th>Code</th>
+            <th>Course</th>
+            <th>Teacher</th>
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for subject in subjects %}
+
+        <tr>
+
+            <td>{{ subject.name }}</td>
+            <td>{{ subject.code }}</td>
+            <td>{{ subject.course }}</td>
+            <td>{{ subject.teacher }}</td>
+
+            <td>
+
+                <a href="{% url 'subject_edit' subject.id %}">
+                    Edit
+                </a>
+
+                <a href="{% url 'subject_delete' subject.id %}">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

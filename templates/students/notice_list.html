@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>
+    Notice Board
+</h2>
+
+{% for notice in notices %}
+
+<div class="card">
+
+    <h3>
+        {{ notice.title }}
+    </h3>
+
+    <p>
+        {{ notice.content }}
+    </p>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

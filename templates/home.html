@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="home-container">
+
+    <h1>
+        Welcome To Student Management System
+    </h1>
+
+    <p>
+
+        Manage students, courses,
+        teachers, attendance,
+        results and notices.
+
+    </p>
+
+    <div class="home-buttons">
+
+        <a href="{% url 'login' %}"
+           class="btn">
+
+            Login
+
+        </a>
+
+        <a href="{% url 'register' %}"
+           class="btn">
+
+            Register
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
