@@ -34,32 +34,25 @@ def env_bool(name, default=False):
 # SECURITY WARNING: keep the secret key used in production secret!
 # In development, a fallback key is used so the project still runs out of the
 # box, but production deployments MUST set DJANGO_SECRET_KEY.
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY',
-    'django-insecure-$z5cc*)zmif2$6ik69tdc-(8!9hdt^fk!u!k&k)t0s6e7@3yhf',
-)
+
+import os
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env_bool('DJANGO_DEBUG', default=True)
+
 
 ALLOWED_HOSTS = [
-    h.strip()
-    for h in os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-    if h.strip()
+  'localhost','127.0.0.1'
+    
 ]
 
 # When DEBUG is off, browsers/CDNs sitting in front of the app (Heroku,
 # Render, etc.) commonly forward the original scheme via this header.
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    CSRF_TRUSTED_ORIGINS = [
-        o.strip()
-        for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
-        if o.strip()
-    ]
-    SESSION_COOKIE_SECURE = env_bool('DJANGO_SESSION_COOKIE_SECURE', default=True)
-    CSRF_COOKIE_SECURE = env_bool('DJANGO_CSRF_COOKIE_SECURE', default=True)
-    SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0'))
+CSRF_TRUSTED_ORIGINS = [
+    "https://127.0.0.1:8000","https://localhost:8000"]
+ 
 
 # CSRF protection stays on (Django's CsrfViewMiddleware, enabled below).
 
@@ -77,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -117,16 +111,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # fall back to a local db.sqlite3 file.
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'student_management',
-        'USER': 'root',
-        'PASSWORD': 'loli123,sara',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'))}
 
 
 # Password validation
@@ -163,17 +151,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",},}
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media' 
