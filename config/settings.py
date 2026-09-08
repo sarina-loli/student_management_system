@@ -44,14 +44,14 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
 ALLOWED_HOSTS = [
-  'localhost','127.0.0.1'
-    
+  'localhost','127.0.0.1','student-management-system-947y.onrender.com'   
 ]
 
 # When DEBUG is off, browsers/CDNs sitting in front of the app (Heroku,
 # Render, etc.) commonly forward the original scheme via this header.
 CSRF_TRUSTED_ORIGINS = [
-    "https://127.0.0.1:8000","https://localhost:8000"]
+    "https://127.0.0.1:8000","https://localhost:8000",
+    "https://student-management-system-947y.onrender.com"]
  
 
 # CSRF protection stays on (Django's CsrfViewMiddleware, enabled below).
