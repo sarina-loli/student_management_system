@@ -23,6 +23,7 @@
 
     <input type="text"
            name="q"
+           value="{{ request.GET.q }}"
            placeholder="Search Student">
 
     <button type="submit"
@@ -33,6 +34,8 @@
     </button>
 
 </form>
+
+<div class="table-responsive">
 
 <table>
 
@@ -45,6 +48,8 @@
             <th>Name</th>
 
             <th>Email</th>
+
+            <th>Phone</th>
 
             <th>Course</th>
 
@@ -74,22 +79,33 @@
             </td>
 
             <td>
+                {{ student.phone }}
+            </td>
+
+            <td>
                 {{ student.course }}
             </td>
 
             <td>
 
-                <a href="{% url 'student_detail' student.id %}">
-                    View
-                </a>
+                <div class="action-links">
 
-                <a href="{% url 'student_edit' student.id %}">
-                    Edit
-                </a>
+                    <a href="{% url 'student_detail' student.id %}"
+                       class="btn-view">
+                        View
+                    </a>
 
-                <a href="{% url 'student_delete' student.id %}">
-                    Delete
-                </a>
+                    <a href="{% url 'student_edit' student.id %}"
+                       class="btn-edit">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'student_delete' student.id %}"
+                       class="btn-delete">
+                        Delete
+                    </a>
+
+                </div>
 
             </td>
 
@@ -99,7 +115,7 @@
 
         <tr>
 
-            <td colspan="5">
+            <td colspan="6">
 
                 No Students Found
 
@@ -112,5 +128,7 @@
     </tbody>
 
 </table>
+
+</div>
 
 {% endblock %}

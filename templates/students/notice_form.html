@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>
+        {% if object %}Edit Notice{% else %}Post Notice{% endif %}
+    </h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit"
+                class="btn">
+
+            Save Notice
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

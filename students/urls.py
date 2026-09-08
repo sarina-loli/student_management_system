@@ -55,3 +55,8 @@ urlpatterns += [
     path('notices/<int:pk>/edit/',NoticeUpdateView.as_view(),name='notice_edit'),
     path('notices/<int:pk>/delete/',NoticeDeleteView.as_view(),name='notice_delete'),
 ]
+urlpatterns += [
+    path('reports/attendance/',attendance_report,name='attendance_report'),
+    path('reports/results/',result_report,name='result_report'),
+    path('reports/admin/',admin_report,name='admin_report'),
+]

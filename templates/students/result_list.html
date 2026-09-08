@@ -2,20 +2,49 @@
 
 {% block content %}
 
-<h2>
-    Results
-</h2>
+<div class="page-header">
+
+    <h2>
+        Results
+    </h2>
+
+    <a href="{% url 'result_add' %}"
+       class="btn">
+
+        Add Result
+
+    </a>
+
+</div>
+
+<form method="GET" class="search-form">
+
+    <input type="text"
+           name="q"
+           value="{{ request.GET.q }}"
+           placeholder="Search by student or subject">
+
+    <button type="submit"
+            class="btn">
+
+        Search
+
+    </button>
+
+</form>
+
+<div class="table-responsive">
 
 <table>
 
     <thead>
 
         <tr>
-
             <th>Student</th>
             <th>Subject</th>
             <th>Marks</th>
             <th>Grade</th>
+            <th>Actions</th>
 
         </tr>
 
@@ -33,8 +62,38 @@
 
             <td>{{ result.marks }}</td>
 
-            <td>{{ result.grade }}</td>
+            <td>
+                {% if result.grade == 'F' %}
+                <span class="badge badge-fail">{{ result.grade }}</span>
+                {% else %}
+                <span class="badge badge-pass">{{ result.grade }}</span>
+                {% endif %}
+            </td>
 
+            <td>
+
+                <div class="action-links">
+
+                    <a href="{% url 'result_edit' result.id %}"
+                       class="btn-edit">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'result_delete' result.id %}"
+                       class="btn-delete">
+                        Delete
+                    </a>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="5">No Results Found</td>
         </tr>
 
         {% endfor %}
@@ -42,5 +101,7 @@
     </tbody>
 
 </table>
+
+</div>
 
 {% endblock %}

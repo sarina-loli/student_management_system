@@ -2,9 +2,20 @@
 
 {% block content %}
 
-<h2>
-    Notice Board
-</h2>
+<div class="page-header">
+
+    <h2>
+        Notice Board
+    </h2>
+
+    <a href="{% url 'notice_add' %}"
+       class="btn">
+
+        Add Notice
+
+    </a>
+
+</div>
 
 {% for notice in notices %}
 
@@ -18,6 +29,28 @@
         {{ notice.content }}
     </p>
 
+    <p>
+        <small>{{ notice.created_at }}</small>
+    </p>
+
+    <div>
+
+        <a href="{% url 'notice_edit' notice.id %}">
+            Edit
+        </a>
+
+        <a href="{% url 'notice_delete' notice.id %}">
+            Delete
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="card">
+    <p>No notices posted yet.</p>
 </div>
 
 {% endfor %}

@@ -5,7 +5,7 @@
 <div class="card">
 
     <h2>
-        Subject Form
+        {% if object %}Edit Subject{% else %}Add Subject{% endif %}
     </h2>
 
     <form method="POST">
@@ -14,7 +14,7 @@
 
         {{ form.as_p }}
 
-        <button class="btn">
+        <button type="submit" class="btn">
 
             Save Subject
 

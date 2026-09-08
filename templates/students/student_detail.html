@@ -46,6 +46,12 @@
         {{ object.address }}
     </p>
 
+    <div>
+        <a href="{% url 'student_edit' object.id %}" class="btn">Edit</a>
+        <a href="{% url 'student_delete' object.id %}" class="btn">Delete</a>
+        <a href="{% url 'student_list' %}">Back to Students</a>
+    </div>
+
 </div>
 
 {% endblock %}

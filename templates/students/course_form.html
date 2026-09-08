@@ -5,7 +5,7 @@
 <div class="card">
 
     <h2>
-        {% if object %}Edit Teacher{% else %}Add Teacher{% endif %}
+        {% if object %}Edit Course{% else %}Add Course{% endif %}
     </h2>
 
     <form method="POST">
@@ -14,10 +14,10 @@
 
         {{ form.as_p }}
 
-        <button type="submit"
-                class="btn">
+        <button class="btn"
+                type="submit">
 
-            Save Teacher
+            Save Course
 
         </button>
 

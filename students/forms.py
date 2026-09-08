@@ -46,11 +46,19 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'admission_date': forms.DateInput(attrs={'type': 'date'}),
+            'address': forms.Textarea(attrs={'rows': 3}),
+        }
 
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = '__all__'
+        widgets = {
+            'hire_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -65,9 +73,26 @@ class SubjectForm(forms.ModelForm):
 
 class AttendanceForm(forms.ModelForm):
     class Meta:
-
         model = Attendance
         fields = '__all__'
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        student = cleaned_data.get('student')
+        subject = cleaned_data.get('subject')
+        date = cleaned_data.get('date')
+        if student and subject and date:
+            qs = Attendance.objects.filter(student=student, subject=subject, date=date)
+            if self.instance.pk:
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
+                raise forms.ValidationError(
+                    'Attendance for this student, subject and date already exists.'
+                )
+        return cleaned_data
 
 class ResultForm(forms.ModelForm):
     class Meta:
